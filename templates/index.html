@@ -8,14 +8,6 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css"
     />
-    <style>
-      .ham-background {
-        background-color: #d4edda; /* Hijau muda */
-      }
-      .spam-background {
-        background-color: #f8d7da; /* Merah muda */
-      }
-    </style>
   </head>
   <body
     class="{% if prediction == 'ham' %}ham-background{% elif prediction == 'spam' %}spam-background{% endif %}"
