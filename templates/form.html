@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+    <title>SafeInbox</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css"
+    />
+
+    <style>
+      .title {
+        font-size: 3rem;
+        color: black;
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .title:hover {
+        transform: scale(1.1);
+      }
+
+      .button {
+        margin-top: 10px;
+        background-color: #126c93;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+      }
+
+      .button:hover {
+        background-color: #126c93;
+      }
+
+      .notification {
+        margin-top: 4px;
+        padding: 1rem;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body
+    class="{% if prediction == 'ham' %}ham-background{% elif prediction == 'spam' %}spam-background{% endif %}"
+  >
+    <section class="section">
+      <div class="container">
+        <div class="has-text-centered">
+          <h1 class="title"><i>SafeInbox</i></h1>
+        </div>
+        <form action="/predict" method="post">
+          <div class="field">
+            <label class="label">Email Text</label>
+            <div class="control">
+              <textarea
+                class="textarea"
+                name="email_text"
+                rows="10"
+                placeholder="Enter email text here..."
+              ></textarea>
+            </div>
+          </div>
+          <div class="control">
+            <button class="button is-link">Detect Spam</button>
+          </div>
+        </form>
+        {% if prediction %}
+        <div
+          class="notification {% if prediction == 'ham' %}is-primary{% elif prediction == 'spam' %}is-danger{% endif %}"
+        >
+          <p>The email is {{ prediction }}</p>
+        </div>
+        {% endif %}
+      </div>
+    </section>
+  </body>
+</html>
