@@ -1,8 +1,7 @@
-from flask import Flask, request, render_template, jsonify
-import joblib
+from flask import Flask, request, render_template, send_from_directory
 import os
+import joblib
 import nltk
-from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
 
@@ -22,10 +21,18 @@ def preprocess_text(text):
 model_filename = './model/trained_model.pkl'
 pipe_svc = joblib.load(model_filename)
 
+@app.route('/favicon')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'assets', 'img'),
+                               'favicon.png', mimetype='image/png')
 # Route untuk halaman utama
 @app.route('/')
 def home():
     return render_template('index.html')
+
+@app.route('/predict')
+def form():
+    return render_template('form.html')
 
 # Route untuk memprediksi email
 @app.route('/predict', methods=['POST'])
@@ -34,7 +41,7 @@ def predict():
     email_text = preprocess_text(email_text)
     prediction = pipe_svc.predict([email_text])
     result = 'spam' if prediction[0] == 1 else 'ham'
-    return render_template('index.html', prediction=result)
+    return render_template('form.html', prediction=result)
 
 if __name__ == '__main__':
     nltk.download('stopwords')
