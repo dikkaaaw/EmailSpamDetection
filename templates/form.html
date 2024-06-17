@@ -9,7 +9,6 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css"
     />
-
     <style>
       .title {
         font-size: 3rem;
@@ -43,10 +42,22 @@
         border-radius: 10px;
       }
     </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        form.addEventListener("submit", function (event) {
+          const emailText = document.querySelector(
+            "textarea[name='email_text']"
+          ).value;
+          if (!emailText.trim()) {
+            alert("Form masih kosong, silakan isi email text.");
+            event.preventDefault();
+          }
+        });
+      });
+    </script>
   </head>
-  <body
-    class="{% if prediction == 'ham' %}ham-background{% elif prediction == 'spam' %}spam-background{% endif %}"
-  >
+  <body>
     <section class="section">
       <div class="container">
         <div class="has-text-centered">
