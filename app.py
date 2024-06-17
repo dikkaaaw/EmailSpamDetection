@@ -17,14 +17,6 @@ def preprocess_text(text):
     tokens = [stemmer.stem(token) for token in tokens]
     return ' '.join(tokens)
 
-# Memuat model
-model_filename = './model/trained_model.pkl'
-pipe_svc = joblib.load(model_filename)
-
-@app.route('/favicon')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'assets', 'img'),
-                               'favicon.png', mimetype='image/png')
 # Route untuk halaman utama
 @app.route('/')
 def home():
