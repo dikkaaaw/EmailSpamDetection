@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template, send_from_directory
-import os
 import joblib
 import nltk
 from nltk.tokenize import word_tokenize
@@ -16,6 +15,10 @@ def preprocess_text(text):
     stemmer = PorterStemmer()
     tokens = [stemmer.stem(token) for token in tokens]
     return ' '.join(tokens)
+
+# Memuat model
+model_filename = './model/trained_model.pkl'
+pipe_svc = joblib.load(model_filename)
 
 # Route untuk halaman utama
 @app.route('/')
