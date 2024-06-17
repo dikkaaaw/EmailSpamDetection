@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, send_from_directory
+from flask import Flask, request, render_template
 import joblib
 import nltk
 from nltk.tokenize import word_tokenize
