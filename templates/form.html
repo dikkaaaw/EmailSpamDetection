@@ -42,7 +42,6 @@
         border-radius: 10px;
       }
 
-      /* Loading Screen Styles */
       #loading-screen {
         display: flex;
         justify-content: center;
@@ -56,14 +55,12 @@
         z-index: 1000;
       }
 
-      /* Spinner Icon Styles */
       .spinner {
         font-size: 3rem;
         display: inline-block;
         animation: spin 1s linear infinite;
       }
 
-      /* Loading Text Styles */
       .loading-text {
         font-size: 1.5rem;
         margin-left: 1rem;
@@ -102,12 +99,11 @@
           }
         });
 
-        // Hide the loading screen when content is fully loaded
         window.addEventListener("load", function () {
           setTimeout(function () {
             const loadingScreen = document.getElementById("loading-screen");
             loadingScreen.style.display = "none";
-          }, 1000); // Delay in milliseconds (e.g., 1000 ms = 1 second)
+          }, 3000);
         });
       });
     </script>
