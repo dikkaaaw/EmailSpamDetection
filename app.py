@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template
 import joblib
 from helper import preprocess_text
-# import nltk
+import nltk
 # from nltk.tokenize import word_tokenize
 # from nltk.stem import PorterStemmer
 
