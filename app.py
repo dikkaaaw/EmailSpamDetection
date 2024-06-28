@@ -18,7 +18,6 @@ def preprocess_text(text):
 
 # Memuat model
 model_filename = './model/trained_model.pkl'
-globals()['preprocess_text'] = preprocess_text
 pipe_svc = joblib.load(model_filename)
 
 # Route untuk halaman utama
