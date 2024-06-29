@@ -1,21 +1,20 @@
 from flask import Flask, request, render_template
 import joblib
-from helper import preprocess_text
 import nltk
-# from nltk.tokenize import word_tokenize
-# from nltk.stem import PorterStemmer
+from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer
 
 # Inisialisasi aplikasi Flask
 app = Flask(__name__)
 
 # # Fungsi preprocess_text
-# def preprocess_text(text):
-#     tokens = word_tokenize(text)
-#     tokens = [token.lower() for token in tokens]
-#     tokens = [token for token in tokens if token.isalnum()]
-#     stemmer = PorterStemmer()
-#     tokens = [stemmer.stem(token) for token in tokens]
-#     return ' '.join(tokens)
+def preprocess_text(text):
+    tokens = word_tokenize(text)
+    tokens = [token.lower() for token in tokens]
+    tokens = [token for token in tokens if token.isalnum()]
+    stemmer = PorterStemmer()
+    tokens = [stemmer.stem(token) for token in tokens]
+    return ' '.join(tokens)
 
 # Memuat model
 model_filename = './model/trained_model.pkl'
