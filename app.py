@@ -21,10 +21,10 @@ def preprocess_text(text):
 nltk.download('stopwords', quiet=True)
 nltk.download('punkt', quiet=True)
 
-# Memuat model
+# Memuat model dengan globals
 model_filename = os.path.join(os.path.dirname(__file__), 'model', 'trained_model.pkl')
 print(f"Loading model from {model_filename}")
-pipe_svc = joblib.load(model_filename)
+pipe_svc = joblib.load(model_filename, mmap_mode=None, globals={'preprocess_text': preprocess_text})
 
 # Route untuk halaman utama
 @app.route('/')
