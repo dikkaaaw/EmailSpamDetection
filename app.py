@@ -3,11 +3,12 @@ import joblib
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
+import os
 
 # Inisialisasi aplikasi Flask
 app = Flask(__name__)
 
-# # Fungsi preprocess_text
+# Fungsi preprocess_text
 def preprocess_text(text):
     tokens = word_tokenize(text)
     tokens = [token.lower() for token in tokens]
@@ -16,8 +17,12 @@ def preprocess_text(text):
     tokens = [stemmer.stem(token) for token in tokens]
     return ' '.join(tokens)
 
+# Memastikan dataset NLTK diunduh
+nltk.download('stopwords', quiet=True)
+nltk.download('punkt', quiet=True)
+
 # Memuat model
-model_filename = './model/trained_model.pkl'
+model_filename = os.path.join(os.path.dirname(__file__), 'model/trained_model.pkl')
 pipe_svc = joblib.load(model_filename)
 
 # Route untuk halaman utama
@@ -39,6 +44,4 @@ def predict():
     return render_template('form.html', prediction=result)
 
 if __name__ == '__main__':
-    nltk.download('stopwords')
-    nltk.download('punkt')
     app.run(debug=False)
