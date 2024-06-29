@@ -22,7 +22,7 @@ nltk.download('stopwords', quiet=True)
 nltk.download('punkt', quiet=True)
 
 # Memuat model
-model_filename = os.path.join(os.path.dirname(__file__), 'model/trained_model.pkl')
+model_filename = os.path.join(os.path.dirname(__file__), '/model/trained_model.pkl')
 pipe_svc = joblib.load(model_filename)
 
 # Route untuk halaman utama
