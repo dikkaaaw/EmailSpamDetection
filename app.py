@@ -1,29 +1,24 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template
 import joblib
 import nltk
-import os
-from preprocess import preprocess_text  # Impor fungsi preprocess_text
+from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer
 
 # Inisialisasi aplikasi Flask
 app = Flask(__name__)
 
-# Memastikan dataset NLTK diunduh
-nltk.download('stopwords', quiet=True)
-nltk.download('punkt', quiet=True)
-
-# Fungsi khusus untuk memuat model dengan globals
-def custom_unpickler():
-    import preprocess
-    globals()['preprocess_text'] = preprocess.preprocess_text
+# Fungsi preprocess_text
+def preprocess_text(text):
+    tokens = word_tokenize(text)
+    tokens = [token.lower() for token in tokens]
+    tokens = [token for token in tokens if token.isalnum()]
+    stemmer = PorterStemmer()
+    tokens = [stemmer.stem(token) for token in tokens]
+    return ' '.join(tokens)
 
 # Memuat model
-model_filename = os.path.join(os.path.dirname(__file__), 'model', 'trained_model.pkl')
-if os.path.exists(model_filename):
-    with open(model_filename, 'rb') as f:
-        custom_unpickler()
-        pipe_svc = joblib.load(f)
-else:
-    raise FileNotFoundError(f"Model file {model_filename} not found. Please ensure the path is correct.")
+model_filename = './model/trained_model.pkl'
+pipe_svc = joblib.load(model_filename)
 
 # Route untuk halaman utama
 @app.route('/')
@@ -34,6 +29,7 @@ def home():
 def form():
     return render_template('form.html')
 
+
 # Route untuk memprediksi email
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -41,10 +37,9 @@ def predict():
     email_text = preprocess_text(email_text)
     prediction = pipe_svc.predict([email_text])
     result = 'spam' if prediction[0] == 1 else 'ham'
-    response = {
-        'prediction_text': f'Prediksi: {result}',
-    }
-    return jsonify(response)
+    return render_template('form.html', prediction=result)
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    nltk.download('stopwords')
+    nltk.download('punkt')
+    app.run(debug=True)
