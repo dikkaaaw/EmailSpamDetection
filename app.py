@@ -38,11 +38,16 @@ def form():
 # Route untuk memprediksi email
 @app.route('/predict', methods=['POST'])
 def predict():
-    email_text = request.form['email_text']
-    email_text = preprocess_text(email_text)
-    prediction = pipe_svc.predict([email_text])
-    result = 'spam' if prediction[0] == 1 else 'ham'
-    return render_template('form.html', prediction=result)
+    try:
+        email_text = request.form['email_text']
+        email_text = preprocess_text(email_text)
+        prediction = pipe_svc.predict([email_text])
+        result = 'spam' if prediction[0] == 1 else 'ham'
+        return render_template('form.html', prediction=result)
+    except Exception as e:
+        # Menangkap dan mencetak kesalahan
+        print(f"Error: {e}")
+        return render_template('form.html', prediction='Error processing request')
 
 if __name__ == '__main__':
     nltk.download('stopwords')
