@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-import joblib
+import pickle
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
@@ -17,8 +17,9 @@ def preprocess_text(text):
     return ' '.join(tokens)
 
 # Memuat model
-model_filename = './model/trained_model.pkl'
-pipe_svc = joblib.load(model_filename)
+model_filename = './model/trained_model_2.pkl'
+with open(model_filename, 'rb') as file:
+    pipe_svc = pickle.load(file)
 
 # Route untuk halaman utama
 @app.route('/')
