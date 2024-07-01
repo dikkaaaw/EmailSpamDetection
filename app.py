@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-import pickle
+import dill as pickle
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
