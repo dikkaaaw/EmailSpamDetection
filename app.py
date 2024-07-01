@@ -16,6 +16,10 @@ def preprocess_text(text):
     tokens = [stemmer.stem(token) for token in tokens]
     return ' '.join(tokens)
 
+# Tambahkan fungsi ke namespace
+import __main__
+__main__.preprocess_text = preprocess_text
+
 # Memuat model
 model_filename = './model/trained_model_2.pkl'
 with open(model_filename, 'rb') as file:
