@@ -40,8 +40,14 @@ def form():
 def predict():
     try:
         email_text = request.form['email_text']
+        print(f"Original email text: {email_text}")
+        
         email_text = preprocess_text(email_text)
+        print(f"Preprocessed email text: {email_text}")
+        
         prediction = pipe_svc.predict([email_text])
+        print(f"Prediction result: {prediction}")
+        
         result = 'spam' if prediction[0] == 1 else 'ham'
         return render_template('form.html', prediction=result)
     except Exception as e:
